@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charsett="utf-8">
+	<title>百度一下，你就知道</title>
+</head>
+<!-- <link href="./icon/iconfont.css"  rel="stylesheet" type="text/css"/> -->
+<style>
+*{
+   padding:0;
+   margin:0;
+}
+html{
+	height: 100%;
+}
+body{
+    height:100%;
+}
+.clear:after{
+	content: "";
+    display: block;  /*block宽度会横向填充满屏幕，在父元素的最后追加一个height:0，占满屏幕的看不见的细长条*/
+    line-height: 0;
+    clear: both;  
+}
+
+.topheader{
+	font-size: 12px;
+    font-family: "PingFang SC",Arial,"Microsoft YaHei",sans-serif;
+	padding:0 0 0 24px;
+}
+
+.topheader .left{
+    float:left;
+	margin-top:19px;
+}
+
+.topheader .right{
+	float:right;
+	margin-top:19px;
+}
+.topheader .right .divbox1{
+    padding-right:31px;
+	display:inline
+}
+
+.topheader .left .divbox{
+    padding-right:31px;
+	display:inline
+}
+
+.topheader .more{
+	position:relative;
+
+}
+.topheader .more:hover .content{
+    display:block;
+}
+.topheader .more .content{
+	display:none;
+	height:200px;
+	width:200px;
+	border:solid 2px #eee;
+	position:absolute;
+	top:18px;
+	right:31px;
+}
+.topheader .more1{
+	position:relative;
+
+}
+.topheader .more1 .content1{
+	display:none;
+	height:100px;
+	width:60px;
+	top:18px;
+	right:15px;
+	border:solid 2px #eee;
+	position:absolute;
+}
+.topheader .more1:hover  .content1{
+	display:block;
+	}
+.divbox2{
+	text-align:center;
+	margin:105px 0 0 0;
+}
+.form{
+margin:0 auto;
+	width:700px;
+}
+.inputbox{
+	display:inline-block;
+	vertical-align:bottom;
+	position:relative;
+
+}
+.inputbox .input1{
+	width:500px;
+	height:40px;
+	border-style:solid;
+	border-color:#c4c7ce;
+	border-radius:10px 0 0 10px;
+	vertical-align: bottom;
+	border-right: none;
+	outline:none;
+	float:left;
+}	
+.inputbox .input1:focus{
+	outline:none;
+	border-color:#4e6ef2!important;
+	opacity:1;
+}
+.inputbox .button1{
+	width:108px;
+	height:44px;
+	line-height:45px;
+	background-color:#4e6ef2;
+	border-radius: 0 10px 10px 0;
+	font-size:17px;
+	color:#fff;
+	font-weight:400;
+	border:none;
+	box-shadow:none;
+	outline:0;
+}
+.sousuokuang{
+	position:absolute;
+	top:30px;
+	left:0;
+	width:500px;
+	height:300px;
+	border:solid 2px #4e6ef2;
+	font-size:16px;
+	border-top:none;
+	background-color:#fff;
+	border-radius: 0 0 10px 10px;
+	display:none
+}
+.sousuokuang ul{
+   margin:13px;
+   border-top:solid 2px #eee
+}
+.sousuokuang ul li{
+	margin:10px 0 0 0;
+	list-style: none;
+}
+
+.showlist .sousuokuang{
+display:block;
+}
+.icon-zhaoxiangji{
+	color:#c4c7ce;
+	font-size:20px;
+	position:absolute;
+	right:10px;
+	top:10px;
+	font-weight:700;
+	
+
+}
+.icon-zhaoxiangji:hover{
+	color:#4e6ef2;
+}
+
+</style>
+<body>
+<div class="page">
+	<div class="topheader clear">
+		<div class="left">
+			<div class="divbox"><a href="http://news.baidu.com/">新闻</a></div>
+			<div class="divbox"><a href="https://www.hao123.com//">hao123</a></div>
+			<div class="divbox"><a href="https://map.baidu.com/">地图</a></div>
+			<div class="divbox"><a href="https://haokan.baidu.com/">视频</a></div>
+			<div class="divbox"><a href="https://tieba.baidu.com/index.html">贴吧</a></div>
+			<div class="divbox"><a href="https://xueshu.baidu.com/">学术</a></div>
+			<div class="divbox more">
+				<a href="https://www.baidu.com/more/">更多</a>
+				<div class="content"></div>
+			</div>
+		</div>
+		<div class="right">
+	        <div class="divbox1"><a href="https://www.baidu.com/s?wd=%E9%AB%98%E8%80%83&sa=searchpromo_gk_pc_ysj">高考加油</a></div>
+			<div class=" divbox1 more1">设置
+				<div class="content1"> 1111</div>
+			</div>
+			<div class="divbox1">登录</div>
+		</div>
+	</div>
+
+	<div class="divbox2">
+		<img src="./bai.png"width="350"height="135"/>
+	</div>
+	 <div class="form">
+		<span class="inputbox" id="inputbox">
+			<input autocomplete="off" id="input" data="ssss" type="text" size="15" class="input1 focus" />
+			<button type="text1" size="15" class="button1" id='but'>百度一下</button>
+
+			<div class="sousuokuang">
+		            <ul id='ulbox'>										
+					</ul>
+			</div>
+
+		</span>
+	</div>
+	
+</div>
+</body>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){	
+	function getdata(){
+		var url = './data.json';
+		$.ajax({url:url,
+		success:function(result){			
+				var list = result.g;
+				var slcliat = list.slice(0,9);
+				var str = ''
+				for(var i in slcliat){
+					str += "<li class='listitem'>"+slcliat[i].q+"</li>"
+				}
+				$('#ulbox').html(str);
+				liclick();
+		}});
+	}
+	getdata();
+
+});
+
+function liclick(){
+     $('.listitem').bind('click',function(){
+		 console.log('ssss')
+		var search =  this.innerHTML;
+		location.href =  'https://www.baidu.com/s?wd='+search;
+	 })	 
+	 $('input').bind('focus', function(){
+		$('#inputbox').attr('class', "inputbox showlist");
+		$(".sousuokuang").show();
+	 })
+	 $('body').bind('click', function(evet){
+		 console.log(evet.target.id);
+		 if(evet.target.id == 'input' || evet.target.id == 'inputbox'){
+			 return;
+		 }else{
+			$('#inputbox').attr('class', "inputbox");
+	     	$(".sousuokuang").hide();
+		 }
+	
+	 })
+}
+
+// var input = document.getElementById('input');
+// var inputbox = document.getElementById('inputbox');
+// var input= document.getElementById("input");
+// var listitems = document.getElementsByClassName("listitem");
+// var but = document.getElementById("but");
+// var ulbox = document.getElementById("ulbox");
+//    // a.style.width='100px'
+//    console.log(ulbox);
+//    ulbox.onclick = function(event){   
+//    }
+
+// $('#input').bind('click',function(){
+//         console.log(this);
+// 	   console.log(event);
+// 	   var tagval = event.target.innerHTML;
+// 	   input.value= tagval;
+// 	   console.log(tagval);
+// })
+// //    input.onfocus = function(){
+// //     inputbox.setAttribute('class', "inputbox showlist"); 
+// //    }
+// //    input.onblur = function(){ 
+// //     //inputbox.setAttribute('class', "inputbox");    
+// //    }
+
+// $(".inputbox").click(function(event){
+//     var e=window.event || event;
+//         if(e.stopPropagation){
+//            e.stopPropagation();
+//         }else{
+//            e.cancelBubble = true;
+//      }  
+//     $(".sousuokuang").show();
+//   });
+
+// document.onclick = function(){
+// 	$(".sousuokuang").hide();
+// };
+
+
+
+</script>
+
+</html>
